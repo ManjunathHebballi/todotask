@@ -1,9 +1,8 @@
 import express from "express";
-import userRoutes from "./routes/user.js"
-import taskRoutes from "./routes/task.js"
+import routes from "./routes/index.js"
 import { config } from "dotenv";
 import cookieParser from "cookie-parser";
-import { errorMiddleware } from "./middlewares/error.js";
+import { errorMiddleware } from "./middlewares/error.middlewares.js";
 import cors from "cors"
 
 export const app = express();
@@ -20,8 +19,7 @@ app.use(cors({
 }))
 
 //Routes
-app.use("/api/v1/users",userRoutes)
-app.use("/api/v1/tasks",taskRoutes)
+app.use(routes)
 
 app.get("/",(req,res)=>{
     res.send("Nice working")

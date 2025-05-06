@@ -1,8 +1,8 @@
 
-import { User } from "../models/user.js";
+import { User } from "../models/user.models.js";
 import bcrypt from "bcrypt";
-import { sendCookies } from "../utils/features.js";
-import ErrorHandler from "../middlewares/error.js";
+import { sendCookies } from "../utils/features.utils.js";
+import ErrorHandler from "../middlewares/error.middlewares.js";
 
 
 export const getAllUsers= async(req,res)=>{

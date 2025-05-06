@@ -1,5 +1,5 @@
-import ErrorHandler from "../middlewares/error.js";
-import { Task } from "../models/task.js";
+import ErrorHandler from "../middlewares/error.middlewares.js";
+import { Task } from "../models/task.models.js";
 
 export const newTask= async(req,res, next)=>{
     try {

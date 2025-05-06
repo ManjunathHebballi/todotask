@@ -16,6 +16,11 @@ const schema = new mongoose.Schema({
         required : true,
         select : false
     },
+    refresh_tokens : {
+        type: String,
+        required : true,
+        select : false
+    },
     createdAt : {
         type : Date,
         default : Date.now()
