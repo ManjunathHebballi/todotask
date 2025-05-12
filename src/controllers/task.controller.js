@@ -1,8 +1,11 @@
 import { create_task, delete_task, my_task, update_task } from "../services/task.service.js";
 
+import * as taskValidation from "../validations/task.validtaions.js";
+
+
 export const newTask= async(req,res, next)=>{
     try {
-        const task_data = req.body;
+        const task_data = await taskValidation.createTaskSchema.parseAsync(req.body);
         const task = await create_task(task_data,req.user)
         res.status(201).json({
             status : true,
@@ -16,7 +19,7 @@ export const newTask= async(req,res, next)=>{
 
 export const myTask= async(req, res, next) => {
     try {
-        const userid= req.user._id
+        const userid= req.user.id
         const task = await my_task(userid)
         // console.log(task)
         res.status(200).json({
@@ -30,7 +33,7 @@ export const myTask= async(req, res, next) => {
 
 export const updateTask= async(req,res,next)=>{
 try {
-    const {id}=req.params
+    const {id}=await taskValidation.myTaskSchema.parseAsync(req.params)
     const task = await update_task(id)
     res.status(200).json({
         status : true,
@@ -43,7 +46,7 @@ try {
 
 export const deleteTask=async(req,res,next)=>{
 try {
-    const { id } = req.params;
+    const {id}=await taskValidation.myTaskSchema.parseAsync(req.params)
     const task = await delete_task(id);
     res.status(200).json({
         status : true,

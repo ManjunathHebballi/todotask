@@ -1,4 +1,5 @@
 import db from "../config/db.js"
+import createHttpError from "http-errors";
 
 export const create_task=  async (taskData,user)=>{
     // console.log(user)
@@ -13,7 +14,8 @@ export const create_task=  async (taskData,user)=>{
 }
 
 export const my_task=async(userId)=>{
-    const task= await db.tasks.findFirst({
+    console.log(userId)
+    const task= await db.tasks.findMany({
         where : {
             user_id : userId
         }
@@ -27,7 +29,7 @@ export const update_task=async(userId)=>{
         where: { id :userId }
       });
 
-      if (!task) throw new ErrorHandler("Id not found", 404);
+      if (!task) throw new createHttpError.NotFound("Id not found");
 
     const updateTask=await db.tasks.update({
         where : {
@@ -41,6 +43,11 @@ export const update_task=async(userId)=>{
 }
 
 export const delete_task =  async (id)=>{
+    // console.log(id)
+    const task1 = await db.tasks.findUnique({
+        where: { id }
+      });
+    if(!task1) throw new createHttpError.NotFound("Task id doesn't exist")
     const task = await db.tasks.delete({
         where : {
             id

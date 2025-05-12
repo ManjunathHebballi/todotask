@@ -2,7 +2,7 @@ import express from "express";
 import routes from "./routes/index.js"
 import { config } from "dotenv";
 import cookieParser from "cookie-parser";
-import { errorMiddleware } from "./middlewares/error.middlewares.js";
+import errorMiddleware from "./middlewares/error.middlewares.js";
 import cors from "cors"
 
 export const app = express();

@@ -1,6 +1,7 @@
 
 import {  sendCookies } from "../utils/features.utils.js";
 import { loginCheck, registerUser } from "../services/user.service.js";
+import * as userValidations from "../validations/user.validations.js";
 
 
 export const getAllUsers= async(req,res)=>{
@@ -8,7 +9,7 @@ export const getAllUsers= async(req,res)=>{
 
 export const login = async(req,res,next) => {
    try {
-    const validData = req.body;
+    const validData = await userValidations.loginUserSchema.parseAsync(req.body)
 
     let user = await loginCheck(validData);
     // console.log(user)
@@ -22,7 +23,7 @@ export const login = async(req,res,next) => {
 
 export const register = async(req,res, next)=>{
     try {
-        const userData = req.body;
+        const userData = await userValidations.createUserSchema.parseAsync(req.body)
 
         let user =await registerUser(userData);
         // console.log(user)

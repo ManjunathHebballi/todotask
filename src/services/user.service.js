@@ -1,5 +1,5 @@
 import db from "../config/db.js"
-import ErrorHandler from "../middlewares/error.middlewares.js";
+import createHttpError from "http-errors";
 import bcrypt from "bcrypt";
 
 export const loginCheck = async(userData) => {
@@ -14,11 +14,11 @@ export const loginCheck = async(userData) => {
      })
     // console.log(user)
  
-     if(!user) throw new ErrorHandler("Email not found",400);
+     if(!user) throw new createHttpError.NotFound("Email not found");
  
      const isMatch = await bcrypt.compare(password, user.password)
  
-     if(!isMatch) throw new ErrorHandler("Wrong Password",400);
+     if(!isMatch) throw new createHttpError.Unauthorized("Password is wrong")
  
      return user;
  
@@ -35,7 +35,7 @@ export const loginCheck = async(userData) => {
             email
         }  });
 //  console.log(user)
-     if(user) throw new ErrorHandler("User Already Exist",404)
+     if(user) throw new createHttpError.Conflict("User is already exist")
     
      
      const hashpassword= await bcrypt.hash(password,10);
